@@ -358,6 +358,7 @@ DEPENDENCIES
   devise (~> 4.9)
   devise-jwt (~> 0.12.1)
   faker (~> 2.20)
+  jwt
   kamal
   puma (>= 5.0)
   rack-cors (~> 3.0)

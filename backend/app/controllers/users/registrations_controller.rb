@@ -1,5 +1,7 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  respond_to :json
+    respond_to :json
+  skip_before_action :authenticate_user_from_cookie!, only: [:create]
+  skip_before_action :authenticate_user!, only: [:create]
 
   private
 

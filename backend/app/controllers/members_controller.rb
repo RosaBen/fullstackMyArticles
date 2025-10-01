@@ -2,11 +2,11 @@ class MembersController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    user = get_user_from_token
-    render json: {
-      message: "If you see this, you're in!",
-      user: user
-    }
+    if current_user
+      render json: { user: { id: current_user.id, email: current_user.email } }
+    else
+      render json: { error: 'Not authenticated' }, status: :unauthorized
+    end
   end
 
   private
