@@ -25,7 +25,7 @@ export default function Header() {
             <span className='navbar-toggler-icon'></span>
           </button>
           <div className='collapse navbar-collapse' id='navbarNav'>
-            {isAuthenticated === true ? (
+            {isAuthenticated === true || user ? (
               <ul className='navbar-nav me-auto'>
                 <li className='nav-item'>
                   <Link to='/' className='nav-link'>

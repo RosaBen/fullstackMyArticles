@@ -56,6 +56,7 @@ export const AuthProvider = ({ children }) => {
         passwordConfirmation
       );
       if (response.user) {
+        setUser(response.user);
         return { success: true };
       } else {
         return {
