@@ -40,8 +40,27 @@ export const ArticlesProvider = ({ children }) => {
     fetchArticles();
   }, []);
 
-  const addArticle = (newArticle) => {
-    setArticles((prev) => [...prev, newArticle]);
+  const addArticle = async (title, content) => {
+    try {
+      const response = await apiService.createArticle(title, content);
+      if (response.article) {
+        setArticles((prev) => [...prev, response.article]);
+        return { success: true };
+      } else {
+        return {
+          success: false,
+          error: response.errors
+            ? response.errors.join(', ')
+            : response.message || 'Article creation failed',
+        };
+      }
+    } catch (error) {
+      console.error('CreateArticleerror:', error);
+      return {
+        success: false,
+        error: error.message || 'Article creation failed',
+      };
+    }
   };
 
   const updateArticle = (id, updatedArticle) => {

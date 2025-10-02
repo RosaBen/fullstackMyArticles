@@ -1,5 +1,6 @@
 const API_BASE_URL = 'http://127.0.0.1:3000';
 
+let authToken = null;
 export const apiService = {
   // LOGIN
   login: async (email, password) => {
@@ -11,7 +12,12 @@ export const apiService = {
       body: JSON.stringify({ user: { email, password } }),
       credentials: 'include',
     });
-    return response.json();
+    authToken = response.headers.get('Authorization');
+    const data = await response.json();
+    return {
+      authToken,
+      data,
+    };
   },
 
   // LOGOUT
@@ -85,5 +91,28 @@ export const apiService = {
     }
 
     return response.json();
+  },
+
+  // CREATE ARTICLE
+  createArticle: async (title, content) => {
+    try {
+      const headers = {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      };
+      if (authToken) {
+        headers.Authorization = authToken;
+      }
+
+      const response = await fetch(`${API_BASE_URL}/articles`, {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({ article: { title, content } }),
+        credentials: 'include',
+      });
+      return response.json();
+    } catch (error) {
+      console.log('❌ Error:', error.message);
+    }
   },
 };

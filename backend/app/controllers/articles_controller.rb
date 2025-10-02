@@ -19,9 +19,15 @@ class ArticlesController < ApplicationController
     render json: @article
   end
 
+  # GET /articles/new
+  def new
+    @article = Article.new
+    render json: @article
+  end
+
   # POST /articles
   def create
-    @article = Article.new(article_params)
+    @article = current_user.articles.build(article_params)
 
     if @article.save
       render json: @article, status: :created, location: @article

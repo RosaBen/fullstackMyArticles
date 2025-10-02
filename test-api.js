@@ -1,36 +1,73 @@
 // Test script pour vérifier l'API sans navigateur
 const API_BASE_URL = "http://127.0.0.1:3000";
 
-// // console.log("🔥 API Service Loaded", apiService);
-// console.log("🔥 Test console log - if you see this, console.log works!");
+// Variable globale pour stocker le token JWT
+let authToken = null;
 
-// // 🧪 TEST DIRECT DE L'API - Tester createUser automatiquement
-// setTimeout(async () => {
-//   console.log("🧪 Starting API test...");
+async function login() {
+  console.log("🔐 Attempting to login...");
+  const response = await fetch(`${API_BASE_URL}/users/sign_in`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      user: { email: "test@test.com", password: "password" },
+    }),
+  });
 
-//   // Test 1: Vérifier la connexion de base
-//   try {
-//     console.log("🔗 Testing basic connection to:", API_BASE_URL);
-//     const response = await fetch(API_BASE_URL);
-//     console.log("📡 Basic connection status:", response.status);
-//   } catch (error) {
-//     console.log("❌ Basic connection failed:", error.message);
-//   }
+  console.log("📡 Login Response Status:", response.status);
+  console.log(
+    "📡 Login Response Headers:",
+    Object.fromEntries(response.headers.entries())
+  );
 
-//   // Test 2: Tester createUser
-//   try {
-//     console.log("🧪 Testing createUser...");
-//     const result = await apiService.createUser(
-//       "testuser",
-//       "test@example.com",
-//       "password123",
-//       "password123"
-//     );
-//     console.log("✅ createUser SUCCESS:", result);
-//   } catch (error) {
-//     console.log("❌ createUser ERROR:", error);
-//   }
-// }, 2000); // Attendre 2 secondes après le chargement
+  // Récupérer le token JWT depuis l'header Authorization
+  authToken = response.headers.get("Authorization");
+  console.log("🔑 JWT Token:", authToken);
+
+  const data = await response.json();
+  console.log("📄 Login Response Data:", data);
+  return data;
+}
+
+async function createArticle() {
+  console.log("📝 Attempting to create article...");
+  try {
+    const headers = {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    };
+
+    // Ajouter le token JWT si on l'a récupéré lors du login
+    if (authToken) {
+      headers.Authorization = authToken;
+      console.log("🔑 Using auth token:", authToken);
+    }
+
+    const response = await fetch(`${API_BASE_URL}/articles`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify({
+        article: {
+          title: "Test jsasa",
+          content: "Ceci est unassjkkgaskgjksaassghah",
+        },
+      }),
+    });
+
+    console.log("📡 Create Article Response Status:", response.status);
+    console.log(
+      "📡 Create Article Response Headers:",
+      Object.fromEntries(response.headers.entries())
+    );
+
+    const data = await response.json();
+    console.log("📄 Create Article Response Data:", data);
+  } catch (error) {
+    console.log("❌ Error:", error.message);
+  }
+}
 
 // Fonction pour tester createUser
 // async function testCreateUser() {
@@ -67,29 +104,29 @@ const API_BASE_URL = "http://127.0.0.1:3000";
 //   }
 // }
 
-async function getArticleById(id = 1) {
-  const response = await fetch(`${API_BASE_URL}/articles/${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    credentials: "include",
-  });
+// async function getArticleById(id = 1) {
+//   const response = await fetch(`${API_BASE_URL}/articles/${id}`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     credentials: "include",
+//   });
 
-  console.log("📡 Response Status:", response.status);
-  console.log("📡 Response OK:", response.ok);
-  console.log(
-    "📡 Response Headers:",
-    Object.fromEntries(response.headers.entries())
-  );
-  const data = await response.json();
-  console.log("📄 Response Data:", data);
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
+//   console.log("📡 Response Status:", response.status);
+//   console.log("📡 Response OK:", response.ok);
+//   console.log(
+//     "📡 Response Headers:",
+//     Object.fromEntries(response.headers.entries())
+//   );
+//   const data = await response.json();
+//   console.log("📄 Response Data:", data);
+//   if (!response.ok) {
+//     throw new Error(`HTTP error! status: ${response.status}`);
+//   }
 
-  return data;
-}
+//   return data;
+// }
 // Fonction pour tester la connexion de base
 // async function testBasicConnection() {
 //   console.log("🔗 Testing basic connection...");
@@ -109,7 +146,10 @@ async function runTests() {
 
   // await testBasicConnection();
   console.log(""); // ligne vide
-  await getArticleById();
+  await login();
+  await createArticle();
+  // await getArticleById(1);
+  // await testCreateUser();
 
   console.log("\n✅ Tests completed");
 }

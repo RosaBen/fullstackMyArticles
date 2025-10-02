@@ -9,6 +9,7 @@ import Home from './pages/Home';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import ArticlePage from './pages/ArticlePage';
+import NewArticle from './components/NewArticle';
 import './styles/App.css';
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/registration' element={<Registration />} />
             <Route path='/articles/:id' element={<ArticlePage />} />
+            <Route path='/articles/new' element={<NewArticle />} />
           </Routes>
         </main>
         <Footer />

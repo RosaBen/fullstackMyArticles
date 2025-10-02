@@ -26,11 +26,14 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     try {
       const response = await apiService.login(email, password);
-      if (response.user) {
-        setUser(response.user);
+      if (response.data && response.data.user) {
+        setUser(response.data.user);
         return { success: true };
       } else {
-        return { success: false, error: response.error };
+        return {
+          success: false,
+          error: response.data?.error || 'Login failed',
+        };
       }
     } catch (error) {
       console.error('Login error:', error);

@@ -27,7 +27,7 @@ export default function Home() {
         <h1 className='display-4'>Articles</h1>
       </div>
       {isAuthenticated === true ? (
-        <Link to='/' className='btn btn-primary btn-lg'>
+        <Link to='/articles/new' className='btn btn-primary btn-lg'>
           New Article
         </Link>
       ) : (
