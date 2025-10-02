@@ -67,7 +67,10 @@ export default function Home() {
                     <i className="fas fa-user"></i> By {article.user_id}
                   </small> */}
                   </div>
-                  <Link to='/' className='btn btn-outline-primary btn-sm'>
+                  <Link
+                    to={`/articles/${article.id}`}
+                    className='btn btn-outline-primary btn-sm'
+                  >
                     View Article
                   </Link>
                 </div>

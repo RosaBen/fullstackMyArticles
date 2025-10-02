@@ -9,6 +9,7 @@ export default function Header() {
     await logout();
     navigate('/');
   };
+
   return (
     <header className='bg-blue-600 text-white p-4'>
       <nav className='navbar navbar-expand-lg navbar-dark bg-primary'>
