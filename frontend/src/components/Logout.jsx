@@ -7,10 +7,7 @@ export default function Logout() {
 
   return (
     <div>
-      <span>Welcome, {user.email}</span>
-      <button onClick={logout}>
-        Logout
-      </button>
+      <button onClick={logout}>Logout</button>
     </div>
   );
 }

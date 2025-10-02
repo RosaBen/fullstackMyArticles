@@ -5,10 +5,10 @@ export const apiService = {
     const response = await fetch(`${API_BASE_URL}/users/sign_in`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ user: { email, password } }),
-      credentials: 'include'
+      credentials: 'include',
     });
     return response.json();
   },
@@ -16,7 +16,7 @@ export const apiService = {
   logout: async () => {
     const response = await fetch(`${API_BASE_URL}/users/sign_out`, {
       method: 'DELETE',
-      credentials: 'include'
+      credentials: 'include',
     });
     return response.json();
   },
@@ -24,7 +24,7 @@ export const apiService = {
   getCurrentUser: async () => {
     const response = await fetch(`${API_BASE_URL}/member-data`, {
       method: 'GET',
-      credentials: 'include'
+      credentials: 'include',
     });
     return response.json();
   },
@@ -33,16 +33,16 @@ export const apiService = {
     const response = await fetch(`${API_BASE_URL}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
       },
-      credentials: 'include'
+      credentials: 'include',
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     return response.json();
-  }
+  },
 };
 
 console.log('API Service Loaded', apiService);

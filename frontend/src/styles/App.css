@@ -1,4 +1,4 @@
-body{
+body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
@@ -59,7 +59,7 @@ body{
   .author-info {
     font-size: 0.8rem;
   }
-  
+
   .article-author-header {
     font-size: 0.85rem;
   }
@@ -128,8 +128,9 @@ body{
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border: 3px solid transparent;
-  background: linear-gradient(white, white) padding-box,
-              linear-gradient(45deg, #007bff, #6610f2, #e83e8c) border-box;
+  background:
+    linear-gradient(white, white) padding-box,
+    linear-gradient(45deg, #007bff, #6610f2, #e83e8c) border-box;
 }
 
 /* Effet hover sur les images */
@@ -145,10 +146,18 @@ body{
   animation: fadeInUp 0.8s ease forwards;
 }
 
-.article-photos img:nth-child(1) { animation-delay: 0.1s; }
-.article-photos img:nth-child(2) { animation-delay: 0.2s; }
-.article-photos img:nth-child(3) { animation-delay: 0.3s; }
-.article-photos img:nth-child(4) { animation-delay: 0.4s; }
+.article-photos img:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.article-photos img:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.article-photos img:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.article-photos img:nth-child(4) {
+  animation-delay: 0.4s;
+}
 
 @keyframes fadeInUp {
   from {
@@ -181,12 +190,12 @@ body{
     padding: 0.5rem;
     margin: 1rem 0;
   }
-  
+
   .article-photos img {
     min-height: 150px;
     max-height: 300px;
   }
-  
+
   .article-photos img:hover {
     transform: translateY(-4px) scale(1.01);
   }

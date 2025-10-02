@@ -1,9 +1,7 @@
-export default function Alerts (){
+export default function Alerts() {
   return (
     <>
-    <div className="alerts-container"> 
-    
-    </div>
+      <div className='alerts-container'></div>
     </>
-  )
+  );
 }

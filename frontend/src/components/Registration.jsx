@@ -1,7 +1,7 @@
 import { useAuth } from '../hooks/useAuth';
 
 export default function Registration() {
-  const {  user } = useAuth();
+  const { user } = useAuth();
 
   if (!user) return null;
 
