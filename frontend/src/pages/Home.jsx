@@ -1,6 +1,8 @@
 import { useArticles } from '../contexts/ArticlesContextDef';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { initializeScripts } from '../services/scripts';
 
 export default function Home() {
   const { user } = useAuth();
@@ -16,9 +18,9 @@ export default function Home() {
     return <div>Erreur : {error}</div>;
   }
 
-  // const handleNewArticles = ()=>{
-
-  // }
+  useEffect(() => {
+    initializeScripts();
+  }, [articles]);
 
   return (
     <>
@@ -32,24 +34,6 @@ export default function Home() {
       ) : (
         ''
       )}
-      {/* <div>
-      {articles && articles.length > 0 ? (
-        <ul>
-          {articles.map((article, idx) => (
-            <div className="card-body" >
-              <h3>
-                
-              </h3>
-              <p>
-                
-              </p>
-            </div>
-          ))}
-        </ul>
-      ) : (
-        <p>No articles found.</p>
-      )}
-    </div> */}
       <div className='row'>
         <div className='col-12 mb-3'>
           <button id='count-articles' className='btn btn-info' type='button'>
@@ -64,9 +48,12 @@ export default function Home() {
 
       <div id='articles' className='row'>
         {articles && articles.length > 0 ? (
-          <div className='col-md-6 col-lg-4 mb-4 article-card'>
-            {articles.map((article, idx) => (
-              <div className='card h-100 shadow-sm' key={article.id || idx}>
+          articles.map((article, idx) => (
+            <div
+              className='col-md-6 col-lg-4 mb-4 article-card'
+              key={article.id || idx}
+            >
+              <div className='card h-100 shadow-sm'>
                 <div className='card-body'>
                   <h5 className='card-title'>
                     {article.title ? article.title : 'No Title'}
@@ -86,8 +73,8 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))
         ) : (
           <div className='col-md-6 col-lg-4 mb-4 article-card'>
             <p className='card h-100 shadow-sm'>Articles are coming soon...</p>
