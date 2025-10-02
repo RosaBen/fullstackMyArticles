@@ -1,26 +1,23 @@
-import { useEffect, useState } from "react";
+
+import { useArticles } from "../contexts/ArticlesContextDef";
 
 export default function Home (){
-  const [articlesData, setArticlesData] = useState([])
+  const { articles, loading, error } = useArticles();
 
-useEffect(()=>{
-  fetch("http://127.0.0.1:3000/")
-    .then(response => response.json())
-    .then(data => {
-      setArticlesData(data)})
-    .catch(error => {
-      console.error("Erreur lors de la récupération des données :", error)
-    })
-},[])
+  if (loading) {
+    return <div>Chargement des articles...</div>;
+  }
 
-  console.log("articlesData dans le render :", articlesData)
+  if (error) {
+    return <div>Erreur : {error}</div>;
+  }
   
   return (
     <>
     <div>
-      {articlesData && articlesData.length > 0 ? (
+      {articles && articles.length > 0 ? (
         <ul>
-          {articlesData.map((article, idx) => (
+          {articles.map((article, idx) => (
             <div className="card-body" key={article.id || idx}>
               <h3>
                 {article.title ? article.title : 'No Title'}

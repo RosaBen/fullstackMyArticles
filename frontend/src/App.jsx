@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 // import { useState } from 'react'
 // import Alerts from './components/shared/Alerts.jsx'
 import { AuthProvider } from './contexts/AuthContext';
+import { ArticlesProvider } from './contexts/ArticlesContext';
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -12,7 +13,8 @@ import './styles/App.css'
 function App() {
 return (
   <AuthProvider>
-    <Header />
+    <ArticlesProvider>
+      <Header />
     <main>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -21,6 +23,7 @@ return (
       </Routes>
     </main>
     <Footer />
+    </ArticlesProvider>
   </AuthProvider>
 )
 }
