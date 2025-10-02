@@ -1,7 +1,6 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { AuthContext } from "./AuthContextDef";
 import { apiService } from "../services/api";
-
-const AuthContext = createContext()
 
 export const AuthProvider = ({children})=>{
   const [user, setUser]= useState(null)
@@ -24,19 +23,20 @@ export const AuthProvider = ({children})=>{
     }
   }
 
-const login = async(email , password)=> {
-  try {
-    const response = await apiService.login(email, password)
-    if(response.user){
-      setUser(response.user)
-      return{success: true}
-    }else{
-      return{success: false, error: response.error}
+  const login = async(email , password)=> {
+    try {
+      const response = await apiService.login(email, password)
+      if(response.user){
+        setUser(response.user)
+        return{success: true}
+      }else{
+        return{success: false, error: response.error}
+      }
+    } catch (error) {
+      console.error('Login error:', error)
+      return { success: false, error: error.message || 'Connection failed'}
     }
-  } catch (error) {
-    return { success: false, error: 'Connection failed'}
   }
-}
 
 
 const logout = async() =>{
@@ -55,11 +55,3 @@ const value = {
 return <AuthContext.Provider value = {value}>{children}</AuthContext.Provider>
 }
 
-export const useAuth = ()=>{
-  const context = useContext(AuthContext)
-  if(!context){
-    throw new Error("useAuth must be used within AuthProvider");
-    
-  }
-  return context
-}
