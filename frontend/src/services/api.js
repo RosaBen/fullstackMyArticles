@@ -70,4 +70,20 @@ export const apiService = {
 
     return response.json();
   },
+
+  // GET A SINGLE ARTICLE
+  getArticleById: async (id) => {
+    const response = await fetch(`${API_BASE_URL}/articles/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return response.json();
+  },
 };

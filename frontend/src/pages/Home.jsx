@@ -8,7 +8,10 @@ export default function Home() {
   const { user } = useAuth();
   const isAuthenticated = user ? true : false;
   const { articles, loading, error } = useArticles();
-  // isAuthenticated? user_id = user.id : user_id = "Unknown"
+
+  useEffect(() => {
+    initializeScripts();
+  }, [articles]);
 
   if (loading) {
     return <div>Chargement des articles...</div>;
@@ -17,10 +20,6 @@ export default function Home() {
   if (error) {
     return <div>Erreur : {error}</div>;
   }
-
-  useEffect(() => {
-    initializeScripts();
-  }, [articles]);
 
   return (
     <>

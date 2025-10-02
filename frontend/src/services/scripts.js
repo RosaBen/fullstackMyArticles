@@ -16,7 +16,7 @@ const countClick = () => {
 
 const initializeCounter = () => {
   const countBtn = document.getElementById('count-articles');
-  console.log('countBtn', countBtn);
+
   const showResults = document.getElementById('article-count');
 
   if (!countBtn || !showResults) return;

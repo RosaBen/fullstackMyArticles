@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { apiService } from '../services/api';
 import { ArticlesContext } from './ArticlesContextDef';
 
@@ -20,6 +20,21 @@ export const ArticlesProvider = ({ children }) => {
       setLoading(false);
     }
   };
+  const [currentArticle, setCurrentArticle] = useState(null);
+
+  const getArticleById = useCallback(async (id) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const article = await apiService.getArticleById(id);
+      setCurrentArticle(article);
+    } catch (error) {
+      console.error("Erreur lors de la récupération de l'article :", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     fetchArticles();
@@ -41,12 +56,14 @@ export const ArticlesProvider = ({ children }) => {
 
   const value = {
     articles,
+    currentArticle,
     loading,
     error,
     fetchArticles,
     addArticle,
     updateArticle,
     deleteArticle,
+    getArticleById,
   };
 
   return (

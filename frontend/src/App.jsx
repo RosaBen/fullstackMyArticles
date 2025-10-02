@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './components/Login';
 import Registration from './components/Registration';
+import ArticlePage from './pages/ArticlePage';
 import './styles/App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/login' element={<Login />} />
             <Route path='/registration' element={<Registration />} />
+            <Route path='/articles/:id' element={<ArticlePage />} />
           </Routes>
         </main>
         <Footer />
