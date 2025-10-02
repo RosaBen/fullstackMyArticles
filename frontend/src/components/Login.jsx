@@ -14,12 +14,13 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    navigate('/');
     setError('');
 
     const result = await login(email, password);
 
-    if (!result.success) {
+    if (result.success) {
+      navigate('/');
+    } else {
       setError(result.error);
     }
 
@@ -55,7 +56,7 @@ export default function Login() {
               </div>
               <div className='mb-4'>
                 <label htmlFor='password' className='form-label fw-bold'>
-                  Email:
+                  Password:
                 </label>
                 <input
                   id='password'

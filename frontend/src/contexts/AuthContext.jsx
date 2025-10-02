@@ -47,12 +47,37 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const register = async (username, email, password, passwordConfirmation) => {
+    try {
+      const response = await apiService.createUser(
+        username,
+        email,
+        password,
+        passwordConfirmation
+      );
+      if (response.user) {
+        return { success: true };
+      } else {
+        return {
+          success: false,
+          error: response.errors
+            ? response.errors.join(', ')
+            : response.message || 'Registration failed',
+        };
+      }
+    } catch (error) {
+      console.error('Register error:', error);
+      return { success: false, error: error.message || 'Registration failed' };
+    }
+  };
+
   const value = {
     user,
     login,
     logout,
     loading,
     isAuthenticated: !!user,
+    register,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

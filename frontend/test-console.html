@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Test Console</title>
+  </head>
+  <body>
+    <h1>Test Console Log</h1>
+    <button onclick="testConsole()">Test Console Log</button>
+
+    <script>
+      console.log('🔥 PAGE LOADED - Console test');
+
+      function testConsole() {
+        console.log('🚀 BUTTON CLICKED - Console works!');
+        alert('Check your console!');
+      }
+
+      // Test automatique
+      setTimeout(() => {
+        console.log('⏰ AUTOMATIC TEST - 2 seconds after load');
+      }, 2000);
+    </script>
+  </body>
+</html>

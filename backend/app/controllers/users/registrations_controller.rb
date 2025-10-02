@@ -1,9 +1,12 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-    respond_to :json
-  skip_before_action :authenticate_user_from_cookie!, only: [:create]
-  skip_before_action :authenticate_user!, only: [:create]
+  skip_before_action :verify_authenticity_token
+  respond_to :json
 
   private
+
+    def sign_up_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+  end
 
   def respond_with(resource, _opts = {})
     register_success && return if resource.persisted?
@@ -18,7 +21,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
     }, status: :ok
   end
 
-  def register_failed
-    render json: { message: 'Something went wrong.' }, status: :unprocessable_entity
-  end
+def register_failed
+  render json: { 
+    message: 'Registration failed.', 
+    errors: resource.errors.full_messages 
+  }, status: :unprocessable_entity
+end
 end
