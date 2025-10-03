@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
-  # Protection CSRF de Rails pour les requêtes JSON avec null_session
-  protect_from_forgery with: :null_session, if: :json_request?
+  # Désactiver complètement CSRF pour les requêtes JSON (APIs)
+  skip_before_action :verify_authenticity_token, if: :json_request?
   respond_to :json
   
   before_action :authenticate_user_from_jwt

@@ -42,20 +42,34 @@ export const ArticlesProvider = ({ children }) => {
 
   const addArticle = async (title, content) => {
     try {
+      console.log('📝 ArticlesContext: Starting addArticle...', {
+        title,
+        content,
+      });
       const response = await apiService.createArticle(title, content);
-      if (response.article) {
-        setArticles((prev) => [...prev, response.article]);
+      console.log('📡 ArticlesContext: Response received:', response);
+
+      // Le backend Rails retourne directement l'article, pas { article: {...} }
+      if (response && response.id) {
+        console.log(
+          '✅ ArticlesContext: Article created successfully, adding to list'
+        );
+        setArticles((prev) => [...prev, response]);
+        // Rafraîchir la liste des articles pour être sûr
+        fetchArticles();
         return { success: true };
       } else {
+        console.error('❌ ArticlesContext: Invalid response format:', response);
         return {
           success: false,
           error: response.errors
             ? response.errors.join(', ')
-            : response.message || 'Article creation failed',
+            : response.message ||
+              'Article creation failed - Invalid response format',
         };
       }
     } catch (error) {
-      console.error('CreateArticleerror:', error);
+      console.error('❌ ArticlesContext: CreateArticle error:', error);
       return {
         success: false,
         error: error.message || 'Article creation failed',
