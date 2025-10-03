@@ -3,9 +3,8 @@ import { useArticles } from '../contexts/ArticlesContextDef';
 import { useAuth } from '../hooks/useAuth';
 import { useState } from 'react';
 export default function NewArticle() {
-  const { user } = useAuth;
-  const isAuthenticated = user ? true : false;
-  const { addArticle } = useArticles;
+  const { isAuthenticated, loading: authLoading } = useAuth();
+  const { addArticle } = useArticles();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
@@ -27,27 +26,32 @@ export default function NewArticle() {
 
     setLoading(false);
   };
+
+  if (authLoading) {
+    return <div>Vérification de l'authentification...</div>;
+  }
+
   return (
     <>
-      <div class='row'>
-        <div class='col-lg-8 offset-lg-2'>
-          <div class='card shadow'>
-            <div class='card-header bg-success text-white'>
-              <h1 class='card-title mb-0'>
-                <i class='fas fa-plus-circle'></i>
+      <div className='row'>
+        <div className='col-lg-8 offset-lg-2'>
+          <div className='card shadow'>
+            <div className='card-header bg-success text-white'>
+              <h1 className='card-title mb-0'>
+                <i className='fas fa-plus-circle'></i>
                 Create a new article
               </h1>
             </div>
-            <div class='card-body'>
-              {isAuthenticated === true ? (
+            <div className='card-body'>
+              {isAuthenticated ? (
                 <form onSubmit={handleSubmit} className='row g-3'>
                   {error && (
                     <div className='alert alert-danger' role='alert'>
                       {error}
                     </div>
                   )}
-                  <div class='col-12'>
-                    <label class='form-label' htmlFor='title'>
+                  <div className='col-12'>
+                    <label className='form-label' htmlFor='title'>
                       Title
                     </label>
                     <input
@@ -62,22 +66,22 @@ export default function NewArticle() {
                       required
                     />
                   </div>
-                  <div class='col-12'>
-                    <label class='form-label' htmlFor='content'>
+                  <div className='col-12'>
+                    <label className='form-label' htmlFor='content'>
                       Content
                     </label>
-                    <input
-                      type='textarea'
+                    <textarea
                       className='form-control'
                       id='content'
                       value={content}
                       onChange={(e) => setContent(e.target.value)}
                       placeholder='Enter the content of your article'
+                      rows='5'
                       required
-                    />
+                    ></textarea>
                   </div>
-                  <div class='col-12'>
-                    <div class='d-flex gap-2'>
+                  <div className='col-12'>
+                    <div className='d-flex gap-2'>
                       <button
                         type='submit'
                         disabled={loading}
